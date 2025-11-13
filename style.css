@@ -1,0 +1,50 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background: #f9f9f9;
+  color: #333;
+}
+h1, h2 {
+  color: #222;
+}
+.upload-area {
+  margin: 20px 0;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  display: inline-block;
+}
+.img-container {
+  display: inline-block;
+  margin: 15px;
+  text-align: center;
+  vertical-align: top;
+  background: white;
+  padding: 8px;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.img-container img {
+  width: 900px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border: 1px solid #eee;
+}
+.section {
+  margin-top: 30px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+#histogramCanvas {
+  width: 600px;
+  height: 200px;
+  border: 1px solid #ddd;
+  background: white;
+  margin-top: 10px;
+}
+canvas {
+  display: none;
+}
