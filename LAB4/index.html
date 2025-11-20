@@ -1,0 +1,43 @@
+<head>
+  <meta charset="UTF-8">
+  <title>Растровые алгоритмы</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Демонстрация растровых алгоритмов</h1>
+  <div class="controls">
+    <label>Алгоритм: </label>
+    <select id="algorithm" onchange="toggleInputs()">
+      <option value="step">Пошаговый</option>
+      <option value="dda">ЦДА</option>
+      <option value="bresenham">Брезенхем (отрезок)</option>
+      <option value="circle">Брезенхем (окружность)</option>
+    </select>
+    <br><br>
+    <label for="x1">x1:</label>
+    <input type="number" id="x1" value="5" min="-15" max="15">
+    <label for="y1">y1:</label>
+    <input type="number" id="y1" value="5" min="-15" max="15">
+    <span id="line-params">
+      <label for="x2">x2:</label>
+      <input type="number" id="x2" value="10" min="-15" max="15">
+      <label for="y2">y2:</label>
+      <input type="number" id="y2" value="10" min="-15" max="15">
+    </span>
+    <label for="radius">Радиус (для окружности):</label>
+    <input type="number" id="radius" value="5" min="0" max="15">
+    <br><br>
+    <button onclick="draw()">Отрисовать</button>
+    <button onclick="clearCanvas()">Очистить</button>
+  </div>
+  <div class="canvas-container">
+    <canvas id="rasterCanvas" width="600" height="600"></canvas>
+  </div>
+  <div id="timing-info"></div>
+  <div id="calculations-output" style="display: none;">
+    <h3>Вычисления ЦДА:</h3>
+    <pre id="calculations-text"></pre>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
