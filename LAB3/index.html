@@ -1,0 +1,124 @@
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Обработка изображений в браузере</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Обработка изображений</h1>
+
+    <div class="upload-area">
+        <label>
+            <strong>Выберите изображение:</strong>
+            <input type="file" id="imageInput" accept="image/*">
+        </label>
+    </div>
+
+    <div id="results" style="display:none;">
+
+        <div class="section">
+            <h2>Повышение контраста</h2>
+            <div class="img-container">
+                <img id="imgOriginal" alt="Оригинал">
+                <canvas id="histogramOriginal" class="histogram"></canvas>
+                <br><small>Оригинал</small>
+            </div>
+            <div class="img-container">
+                <img id="imgLinear" alt="Линейный контраст">
+                <canvas id="histogramLinear" class="histogram"></canvas>
+                <br><small>Линейное контрастирование</small>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Эквализация цветных изображений</h2>
+            <div class="img-container">
+                <img id="imgEqualizedGray" alt="Эквализация серого">
+                <canvas id="histogramEqualizedGray" class="histogram"></canvas>
+                <br><small>Эквализация (серый)</small>
+            </div>
+            <div class="img-container">
+                <img id="imgRGBEqualized" alt="RGB эквализация">
+                <canvas id="histogramRGBEqualized" class="histogram"></canvas>
+                <br><small>RGB-эквализация</small>
+            </div>
+            <div class="img-container">
+                <img id="imgHSVEqualized" alt="HSV эквализация">
+                <canvas id="histogramHSVEqualized" class="histogram"></canvas>
+                <br><small>HSV (только V)</small>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Нелинейные фильтры</h2>
+            <div class="img-container">
+                <img id="imgMedian" alt="Медианный">
+                <canvas id="histogramMedian" class="histogram"></canvas>
+                <br><small>Медианный фильтр</small>
+            </div>
+            <div class="img-container">
+                <img id="imgMin" alt="Минимальный">
+                <canvas id="histogramMin" class="histogram"></canvas>
+                <br><small>Минимальный фильтр</small>
+            </div>
+            <div class="img-container">
+                <img id="imgMax" alt="Максимальный">
+                <canvas id="histogramMax" class="histogram"></canvas>
+                <br><small>Максимальный фильтр</small>
+            </div>
+        </div>
+    </div>
+
+    <script src="ImageProcessor.js"></script>
+    <script>
+        document.getElementById('imageInput').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const img = new Image();
+                img.onload = function () {
+                    const w = img.width, h = img.height;
+
+                    // Оригинал
+                    document.getElementById('imgOriginal').src = img.src;
+                    const tempCanvas = document.createElement('canvas');
+                    const ctx = tempCanvas.getContext('2d');
+                    tempCanvas.width = w;
+                    tempCanvas.height = h;
+                    ctx.drawImage(img, 0, 0);
+                    const originalImageData = ctx.getImageData(0, 0, w, h);
+                    processor.drawHistogram(originalImageData, 'histogramOriginal');
+
+                    // Обработанные изображения
+                    document.getElementById('imgLinear').src = processor.linearContrast(img);
+                    document.getElementById('imgEqualizedGray').src = processor.equalizeGrayscale(img);
+                    document.getElementById('imgRGBEqualized').src = processor.equalizeRGB(img);
+                    document.getElementById('imgHSVEqualized').src = processor.equalizeHSV(img);
+                    document.getElementById('imgMedian').src = processor.applyMedianFilter(img, 3);
+                    document.getElementById('imgMin').src = processor.applyMinMaxFilter(img, 'min');
+                    document.getElementById('imgMax').src = processor.applyMinMaxFilter(img, 'max');
+
+                    // Гистограммы для обработанных изображений
+                    setTimeout(() => {
+                        processor.drawHistogram(processor.getImageDataFromImage(document.getElementById('imgLinear')), 'histogramLinear');
+                        processor.drawHistogram(processor.getImageDataFromImage(document.getElementById('imgEqualizedGray')), 'histogramEqualizedGray');
+                        processor.drawHistogram(processor.getImageDataFromImage(document.getElementById('imgRGBEqualized')), 'histogramRGBEqualized');
+                        processor.drawHistogram(processor.getImageDataFromImage(document.getElementById('imgHSVEqualized')), 'histogramHSVEqualized');
+                        processor.drawHistogram(processor.getImageDataFromImage(document.getElementById('imgMedian')), 'histogramMedian');
+                        processor.drawHistogram(processor.getImageDataFromImage(document.getElementById('imgMin')), 'histogramMin');
+                        processor.drawHistogram(processor.getImageDataFromImage(document.getElementById('imgMax')), 'histogramMax');
+                    }, 100);
+
+                    document.getElementById('results').style.display = 'block';
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
+
+</body>
+</html>
