@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Алгоритмы отсечения — Лианг-Барски и отсечение выпуклого многоугольника</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Визуализация алгоритмов отсечения</h1>
+
+    <div class="controls">
+        <div class="input-section">
+            <h3>Ввод данных</h3>
+            <p style="font-size:13px;color:#333;margin-bottom:8px;">
+                Формат (варианты):
+                <ul style="margin:6px 0 8px 18px;">
+                    <li><b>Отрезки</b> — первая строка: n (число отрезков), далее n строк: <code>x1 y1 x2 y2</code>, затем строка окна: <code>xmin ymin xmax ymax</code>.</li>
+                    <li><b>Многоугольник</b> — первая строка: p (число вершин), затем одна строка с 2*p числами: <code>x1 y1 x2 y2 ... xp yp</code>, затем строка окна: <code>xmin ymin xmax ymax</code>.</li>
+                </ul>
+            </p>
+            <textarea id="inputData" placeholder="Введите данные здесь..." spellcheck="false">
+5
+50 50 200 150
+100 100 250 50
+150 200 300 100
+80 180 180 80
+120 120 280 200
+100 100 300 250
+            </textarea>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <button id="btnLoad">Загрузить</button>
+                <button id="btnExample">Пример (отрезки)</button>
+                <button id="btnExamplePolygon">Пример (многоугольник)</button>
+                <button id="btnReset">Сброс</button>
+            </div>
+            <input type="file" id="fileInput" accept=".txt" style="margin-top:8px;">
+        </div>
+
+        <div class="algorithm-section">
+            <h3>Настройки визуализации</h3>
+            <label>Отступ вокруг фигуры: <input id="padding" type="number" value="200" style="width:70px;"></label>
+            <p style="font-size:13px;margin-top:10px;color:#333;">
+                Координаты в пикселях (проще при тестировании). Ось Y направлена вверх (как в математике).
+            </p>
+        </div>
+    </div>
+
+    <div class="algorithms-container">
+        <div class="algorithm-window">
+            <h3>Алгоритм Лианга-Барски (отрезки)</h3>
+            <div class="canvas-container">
+                <canvas id="liangCanvas" width="400" height="400"></canvas>
+            </div>
+            <div class="algorithm-controls">
+                <button id="btnLiang">Выполнить отсечение</button>
+            </div>
+        </div>
+
+        <div class="algorithm-window">
+            <h3>Алгоритм Sutherland-Hodgman (многоугольники)</h3>
+            <div class="canvas-container">
+                <canvas id="polygonCanvas" width="400" height="400"></canvas>
+            </div>
+            <div class="algorithm-controls">
+                <button id="btnPolyClip">Выполнить отсечение</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="info">
+        <h3>Легенда:</h3>
+        <div class="legend">
+            <div class="legend-item">
+                <div class="color-box window-color"></div>
+                <span>Отсекающее окно</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box original-color"></div>
+                <span>Исходные отрезки / многоугольник</span>
+            </div>
+            <div class="legend-item">
+                <div class="color-box clipped-color"></div>
+                <span>Видимые части</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
