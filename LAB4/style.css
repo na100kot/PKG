@@ -4,8 +4,17 @@ body {
   margin: 20px;
 }
 
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
 .controls {
   margin-bottom: 20px;
+  min-width: 200px;
 }
 
 .canvas-container {
@@ -17,4 +26,75 @@ body {
 #rasterCanvas {
   background-color: white;
   border: 1px solid #000;
+}
+
+.legend {
+  text-align: left;
+  padding: 15px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  min-width: 250px;
+}
+
+.legend h3 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.color-box {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
+  margin-right: 10px;
+  display: inline-block;
+}
+
+#timing-info {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+#calculations-output {
+  margin-top: 20px;
+  text-align: left;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.error-table {
+  margin: 20px auto;
+  border-collapse: collapse;
+  width: 80%;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.error-table th, .error-table td {
+  padding: 12px 15px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.error-table th {
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+}
+
+.error-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.error-table tr:hover {
+  background-color: #e9e9e9;
 }
