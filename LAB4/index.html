@@ -5,35 +5,91 @@
 </head>
 <body>
   <h1>Демонстрация растровых алгоритмов</h1>
-  <div class="controls">
-    <label>Алгоритм: </label>
-    <select id="algorithm" onchange="toggleInputs()">
-      <option value="step">Пошаговый</option>
-      <option value="dda">ЦДА</option>
-      <option value="bresenham">Брезенхем (отрезок)</option>
-      <option value="circle">Брезенхем (окружность)</option>
-    </select>
-    <br><br>
-    <label for="x1">x1:</label>
-    <input type="number" id="x1" value="5" min="-15" max="15">
-    <label for="y1">y1:</label>
-    <input type="number" id="y1" value="5" min="-15" max="15">
-    <span id="line-params">
-      <label for="x2">x2:</label>
-      <input type="number" id="x2" value="10" min="-15" max="15">
-      <label for="y2">y2:</label>
-      <input type="number" id="y2" value="10" min="-15" max="15">
-    </span>
-    <label for="radius">Радиус (для окружности):</label>
-    <input type="number" id="radius" value="5" min="0" max="15">
-    <br><br>
-    <button onclick="draw()">Отрисовать</button>
-    <button onclick="clearCanvas()">Очистить</button>
+  <div class="container">
+    <div class="controls">
+      <label>Алгоритм: </label>
+      <select id="algorithm" onchange="toggleInputs()">
+        <option value="step">Пошаговый</option>
+        <option value="dda">ЦДА</option>
+        <option value="bresenham">Брезенхем (отрезок)</option>
+        <option value="castle-pitway">Кастла-Питвея (отрезок)</option>
+        <option value="circle">Брезенхем (окружность)</option>
+        <option value="wu">Ву (с анти-алиасингом)</option>
+      </select>
+      <br><br>
+      <label for="x1">x1:</label>
+      <input type="number" id="x1" value="2" min="-30" max="30">
+      <label for="y1">y1:</label>
+      <input type="number" id="y1" value="3" min="-30" max="30">
+      <span id="line-params">
+        <label for="x2">x2:</label>
+        <input type="number" id="x2" value="12" min="-30" max="30">
+        <label for="y2">y2:</label>
+        <input type="number" id="y2" value="8" min="-30" max="30">
+      </span>
+      <label for="radius">Радиус (для окружности):</label>
+      <input type="number" id="radius" value="5" min="0" max="30">
+      <br><br>
+      <button onclick="draw()">Отрисовать</button>
+      <button onclick="compareAlgorithms()">Сравнить все</button>
+      <button onclick="clearCanvas()">Очистить</button>
+    </div>
+
+    <div class="canvas-container">
+      <canvas id="rasterCanvas" width="600" height="600"></canvas>
+    </div>
+
+    <div class="legend">
+      <h3>Цвета алгоритмов:</h3>
+      <div class="legend-item">
+        <div class="color-box" style="background-color: red;"></div>
+        <span>Пошаговый алгоритм</span>
+      </div>
+      <div class="legend-item">
+        <div class="color-box" style="background-color: blue;"></div>
+        <span>Алгоритм ЦДА</span>
+      </div>
+      <div class="legend-item">
+        <div class="color-box" style="background-color: green;"></div>
+        <span>Алгоритм Брезенхема (отрезок)</span>
+      </div>
+      <div class="legend-item">
+        <div class="color-box" style="background-color: darkblue;"></div>
+        <span>Алгоритм Кастла-Питвея (отрезок)</span>
+      </div>
+      <div class="legend-item">
+        <div class="color-box" style="background-color: purple;"></div>
+        <span>Алгоритм Брезенхема (окружность)</span>
+      </div>
+      <div class="legend-item">
+        <div class="color-box" style="background-color: gray;"></div>
+        <span>Алгоритм Ву (сглаживание)</span>
+      </div>
+      <div class="legend-item">
+        <div class="color-box" style="background-color: orange;"></div>
+        <span>Совпадение алгоритмов</span>
+      </div>
+    </div>
   </div>
-  <div class="canvas-container">
-    <canvas id="rasterCanvas" width="600" height="600"></canvas>
-  </div>
+
   <div id="timing-info"></div>
+  
+  <div id="error-comparison" style="display: none; margin-top: 30px;">
+    <h3>Сравнение ошибок алгоритмов</h3>
+    <table id="error-table" class="error-table">
+      <thead>
+        <tr>
+          <th>Алгоритм</th>
+          <th>Средняя ошибка</th>
+          <th>Макс. ошибка</th>
+          <th>Кол-во пикселей</th>
+        </tr>
+      </thead>
+      <tbody id="error-table-body">
+      </tbody>
+    </table>
+  </div>
+
   <div id="calculations-output" style="display: none;">
     <h3>Вычисления ЦДА:</h3>
     <pre id="calculations-text"></pre>
